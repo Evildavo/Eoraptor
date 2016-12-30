@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(Animator))]
 public class PlayerDinosaur : MonoBehaviour {
 
     private Animator Animator;
@@ -8,17 +9,64 @@ public class PlayerDinosaur : MonoBehaviour {
 
     public float WalkSpeed = 1.0f;
     public float RunSpeed = 1.0f;
-
-    // Use this for initialization
-    void Start () {
+    
+    void Start ()
+    {
         Animator = GetComponent<Animator>();
         CameraTarget = GetComponentInParent<CameraTarget>();
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {        
-        // Move forward based on the animation state. 
+        if (!CameraTarget)
+        {
+            Destroy(gameObject);
+            Debug.LogError("Parent does not contain CameraTarget", transform);
+        }
+    }
+
+    // Returns to default walk state.
+    public void Walk()
+    {
+        Animator.SetBool("Running", false);
+        Animator.SetBool("Stopped", false);
+    }
+
+    // Ducks down to grab something down low.
+    public void GrabLow()
+    {
+        Animator.SetTrigger("LowGrab");
+    }
+
+    // Jumps up to grab something up high.
+    public void GrabHigh()
+    {
+        Animator.SetTrigger("HighGrab");
+    }
+
+    // Briefly starts running forward.
+    public void SprintForward()
+    {
+        Animator.SetBool("Running", true);
+    }
+
+    // Slows to a stop.
+    public void Stop()
+    {
+        Animator.SetBool("Stopped", true);
+    }
+
+    // Returns true if stopped.
+    public bool IsStopped()
+    {
+        return Animator.GetBool("Stopped");
+    }
+
+    // Returns true if sprinting.
+    public bool IsSprinting()
+    {
+        return Animator.GetBool("Running");
+    }
+
+    void Update ()
+    {
+        // Move forward based on the animation state.
         AnimatorStateInfo state = Animator.GetCurrentAnimatorStateInfo(0);
   
         if (state.IsName("Walk") || state.IsName("LowGrab") || state.IsName("HighGrab"))
