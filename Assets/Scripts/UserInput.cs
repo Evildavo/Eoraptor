@@ -5,46 +5,104 @@ using System.Collections;
 public class UserInput : MonoBehaviour {
 
     private PlayerDinosaur PlayerDinosaur;
+    private bool touching = false;
+    private bool swiped = false;
+    private Vector3 currentTouchPosition;
+    private Vector3 positionAtTouch;
+    private bool upSwipe;
+    private bool downSwipe;
+    private bool leftSwipe;
+    private bool rightSwipe;
 
-	void Start ()
+    public float MinSwipeDistance;
+
+    void Start ()
     {
         PlayerDinosaur = GetComponent<PlayerDinosaur>();
     }
 	
 	void Update ()
     {
-        // Keyboard input.
+        // Keyboard input style.
+        upSwipe = Input.GetKeyDown(KeyCode.UpArrow);
+        downSwipe = Input.GetKeyDown(KeyCode.DownArrow);
+        leftSwipe = Input.GetKeyDown(KeyCode.LeftArrow);
+        rightSwipe = Input.GetKeyDown(KeyCode.RightArrow);
+
+        // Get mouse/touch state.
+        if (Input.touches.Length > 0)
+        {
+            currentTouchPosition = Input.touches[0].position;
+            if (!touching)
+            {
+                positionAtTouch = currentTouchPosition;
+                touching = true;
+            }
+        }
+        else if (Input.GetMouseButton(0))
+        {
+            currentTouchPosition = Input.mousePosition;
+            if (!touching)
+            {
+                positionAtTouch = currentTouchPosition;
+                touching = true;
+            }
+        }
+        else
+        {
+            touching = false;
+            swiped = false;
+        }
+
+        // Check for swipe motions.
+        if (touching && !swiped)
+        {
+            Vector3 touchDelta = currentTouchPosition - positionAtTouch;
+            if (touchDelta.magnitude > MinSwipeDistance)
+            {
+                swiped = true;
+
+                rightSwipe = touchDelta.x > 0f && Mathf.Abs(touchDelta.y) < touchDelta.x;
+                leftSwipe = touchDelta.x < 0f && Mathf.Abs(touchDelta.y) < -touchDelta.x;
+                upSwipe = touchDelta.y > 0f && Mathf.Abs(touchDelta.x) < touchDelta.y;
+                downSwipe = touchDelta.y < 0f && Mathf.Abs(touchDelta.x) < -touchDelta.y;
+            }
+        }
+
+        // Control dinosaur.
         if (PlayerDinosaur.IsSprinting())
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (upSwipe)
             {
                 PlayerDinosaur.GrabHigh();
             }
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            else if (downSwipe)
             {
                 PlayerDinosaur.GrabLow();
             }
         }
         else if (PlayerDinosaur.IsStopped())
         {
-            if (Input.GetKeyDown(KeyCode.RightArrow))
+            if (rightSwipe)
+            {
                 PlayerDinosaur.Walk();
+            }
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (upSwipe)
             {
                 PlayerDinosaur.GrabHigh();
             }
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            else if (downSwipe)
             {
                 PlayerDinosaur.GrabLow();
             }
-            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            else if (rightSwipe)
             {
                 PlayerDinosaur.SprintForward();
             }
-            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            else if (leftSwipe)
             {
                 PlayerDinosaur.Stop();
             }
