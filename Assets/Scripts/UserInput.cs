@@ -62,10 +62,14 @@ public class UserInput : MonoBehaviour {
             {
                 swiped = true;
 
-                rightSwipe = touchDelta.x > 0f && Mathf.Abs(touchDelta.y) < touchDelta.x;
-                leftSwipe = touchDelta.x < 0f && Mathf.Abs(touchDelta.y) < -touchDelta.x;
-                upSwipe = touchDelta.y > 0f && Mathf.Abs(touchDelta.x) < touchDelta.y;
-                downSwipe = touchDelta.y < 0f && Mathf.Abs(touchDelta.x) < -touchDelta.y;
+                if (touchDelta.x > 0f && Mathf.Abs(touchDelta.y) < touchDelta.x)
+                    rightSwipe = true;
+                else if (touchDelta.x < 0f && Mathf.Abs(touchDelta.y) < -touchDelta.x)
+                    leftSwipe = true;
+                else if (touchDelta.y > 0f && Mathf.Abs(touchDelta.x) < touchDelta.y)
+                    upSwipe = true;
+                else if (touchDelta.y < 0f && Mathf.Abs(touchDelta.x) < -touchDelta.y)
+                    downSwipe = true;
             }
         }
 
