@@ -16,8 +16,14 @@ public class UserInput : MonoBehaviour {
         // Keyboard input.
         if (PlayerDinosaur.IsSprinting())
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-                PlayerDinosaur.Walk();
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                PlayerDinosaur.GrabHigh();
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                PlayerDinosaur.GrabLow();
+            }
         }
         else if (PlayerDinosaur.IsStopped())
         {
