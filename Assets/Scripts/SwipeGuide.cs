@@ -19,6 +19,21 @@ public class SwipeGuide : MonoBehaviour {
         SpriteRenderer.enabled = true;
     }
 
+    public void Show()
+    {
+        SpriteRenderer.enabled = true;
+    }
+
+    public void Hide()
+    {
+        SpriteRenderer.enabled = false;
+    }
+
+    public bool IsSwiping()
+    {
+        return isSwiping;
+    }
+
 	void Start () {
         basePosition = transform.localPosition;
         SpriteRenderer = GetComponent<SpriteRenderer>();
@@ -36,10 +51,11 @@ public class SwipeGuide : MonoBehaviour {
                     transform.rotation * new Vector3(0f, timeDelta / SwipeTime * SwipeDistance, 0f);
                 Color colour = SpriteRenderer.color;
                 colour.a = 1f - timeDelta / SwipeTime;
-                SpriteRenderer.color = colour;
+                //SpriteRenderer.color = colour;
             }
             else
             {
+                transform.localPosition = basePosition;
                 SpriteRenderer.enabled = false;
                 isSwiping = false;
             }
