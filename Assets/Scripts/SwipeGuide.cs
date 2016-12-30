@@ -51,7 +51,6 @@ public class SwipeGuide : MonoBehaviour {
                     transform.rotation * new Vector3(0f, timeDelta / SwipeTime * SwipeDistance, 0f);
                 Color colour = SpriteRenderer.color;
                 colour.a = 1f - timeDelta / SwipeTime;
-                //SpriteRenderer.color = colour;
             }
             else
             {
