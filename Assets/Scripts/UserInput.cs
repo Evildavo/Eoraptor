@@ -74,6 +74,31 @@ public class UserInput : MonoBehaviour {
                     downSwipe = true;
             }
         }
+        
+        // Check for arrow button presses.
+        if (touching && !swiped)
+        {
+            if (UI.SwipeUpGuide.IsPointOver(positionAtTouch))
+            {
+                upSwipe = true;
+                swiped = true;
+            }
+            else if (UI.SwipeDownGuide.IsPointOver(positionAtTouch))
+            {
+                downSwipe = true;
+                swiped = true;
+            }
+            else if (UI.SwipeLeftGuide.IsPointOver(positionAtTouch))
+            {
+                leftSwipe = true;
+                swiped = true;
+            }
+            else if (UI.SwipeRightGuide.IsPointOver(positionAtTouch))
+            {
+                rightSwipe = true;
+                swiped = true;
+            }
+        }
 
         // Control dinosaur.
         if (PlayerDinosaur.IsSprinting())

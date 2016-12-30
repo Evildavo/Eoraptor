@@ -2,12 +2,14 @@
 using System.Collections;
 
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(BoxCollider2D))]
 public class SwipeGuide : MonoBehaviour {
 
     private Vector3 basePosition;
     private float timeAtSwipe;
     private bool isSwiping = false;
     private SpriteRenderer SpriteRenderer;
+    private BoxCollider2D BoxCollider2D;
 
     public float SwipeDistance;
     public float SwipeTime = 1.0f;
@@ -34,9 +36,16 @@ public class SwipeGuide : MonoBehaviour {
         return isSwiping;
     }
 
+    public bool IsPointOver(Vector3 point)
+    {
+        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(point);
+        return BoxCollider2D.OverlapPoint(worldPosition);
+    }
+
 	void Start () {
         basePosition = transform.localPosition;
         SpriteRenderer = GetComponent<SpriteRenderer>();
+        BoxCollider2D = GetComponent<BoxCollider2D>();
     }
 	
 	void Update ()
