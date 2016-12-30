@@ -97,6 +97,10 @@ public class PlayerDinosaur : MonoBehaviour
             if (timeDelta < SprintTime)
             {
                 position.x += Mathf.Sin(timeDelta / SprintTime * Mathf.PI) * SprintDistance;
+                if (state.IsName("Walk"))
+                {
+                    Animator.SetBool("Running", true);
+                }
             }
             else
             {
