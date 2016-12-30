@@ -14,6 +14,8 @@ public class UserInput : MonoBehaviour {
     private bool leftSwipe;
     private bool rightSwipe;
 
+    public UI UI;
+
     public float MinSwipeDistance;
 
     void Start ()
@@ -79,10 +81,16 @@ public class UserInput : MonoBehaviour {
             if (upSwipe)
             {
                 PlayerDinosaur.GrabHigh();
+                UI.ShowSwipeUpGuide();
             }
             else if (downSwipe)
             {
                 PlayerDinosaur.GrabLow();
+                UI.ShowSwipeDownGuide();
+            }
+            else
+            {
+
             }
         }
         else if (PlayerDinosaur.IsStopped())
@@ -90,6 +98,7 @@ public class UserInput : MonoBehaviour {
             if (rightSwipe)
             {
                 PlayerDinosaur.Walk();
+                UI.ShowSwipeRightGuide();
             }
         }
         else
@@ -97,18 +106,22 @@ public class UserInput : MonoBehaviour {
             if (upSwipe)
             {
                 PlayerDinosaur.GrabHigh();
+                UI.ShowSwipeUpGuide();
             }
             else if (downSwipe)
             {
                 PlayerDinosaur.GrabLow();
+                UI.ShowSwipeDownGuide();
             }
             else if (rightSwipe)
             {
                 PlayerDinosaur.SprintForward();
+                UI.ShowSwipeRightGuide();
             }
             else if (leftSwipe)
             {
                 PlayerDinosaur.Stop();
+                UI.ShowSwipeLeftGuide();
             }
         }
     }
