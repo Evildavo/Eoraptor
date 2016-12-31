@@ -141,6 +141,13 @@ public class PlayerDinosaur : MonoBehaviour
         }
     }
 
+    IEnumerator FadeOutAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        UI.GetComponentInChildren<ScreenFade>().StartFadeOut();
+    }
+
     void Update()
     {
         // Stop when past the stop point.
@@ -148,6 +155,19 @@ public class PlayerDinosaur : MonoBehaviour
         {
             endReached = true;
             Stop();
+
+            // Determine if we won or not.
+            if (UI.FoodBar.Progress >= UI.FoodBar.Quota)
+            {
+                UI.GetComponentInChildren<EndMessage>().ShowVictory();
+            }
+            else
+            {
+                UI.GetComponentInChildren<EndMessage>().ShowDefeat();
+            }
+
+            // Fade out after a delay.
+            StartCoroutine(FadeOutAfterDelay(5));
         }
 
         // Move forward based on the animation state.
