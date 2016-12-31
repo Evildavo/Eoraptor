@@ -4,6 +4,7 @@ using System.Collections;
 [RequireComponent(typeof(SpriteRenderer))]
 public class ScreenFade : MonoBehaviour {
 
+    private bool fadeFinished;
     private float visibility;
     private bool fadingOut;
     private SpriteRenderer SpriteRenderer;
@@ -15,6 +16,11 @@ public class ScreenFade : MonoBehaviour {
         fadingOut = true;
         SpriteRenderer.enabled = true;
         updateTransparency();
+    }
+
+    public bool FadeFinished()
+    {
+        return fadeFinished;
     }
 
     void updateTransparency()
@@ -38,6 +44,7 @@ public class ScreenFade : MonoBehaviour {
             {
                 visibility = 1f;
                 fadingOut = false;
+                fadeFinished = true;
             }
             else
             {

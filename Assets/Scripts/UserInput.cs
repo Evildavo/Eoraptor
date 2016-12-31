@@ -21,7 +21,7 @@ public class UserInput : MonoBehaviour {
 
     void onAnyTouch()
     {
-        if (PlayerDinosaur.IsEndReached())
+        if (PlayerDinosaur.IsEndReached() && UI.GetComponentInChildren<ScreenFade>().FadeFinished())
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
