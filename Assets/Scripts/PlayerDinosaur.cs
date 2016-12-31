@@ -18,6 +18,7 @@ public class PlayerDinosaur : MonoBehaviour
     public float SprintDistance;
     public float SprintTime = 1.0f;
 
+    public Transform MouthPoint;
     public Transform HighFoodContainer;
     public Transform LowFoodContainer;
 
