@@ -43,12 +43,21 @@ public class PlayerDinosaur : MonoBehaviour
     public void GrabLow()
     {
         Animator.SetTrigger("LowGrab");
+        clearMouth();
     }
 
     // Jumps up to grab something up high.
     public void GrabHigh()
     {
         Animator.SetTrigger("HighGrab");
+        clearMouth();
+    }
+
+    // Clears the dinosaur's mouth of food.
+    void clearMouth()
+    {
+        foreach (Food item in MouthPoint.GetComponentsInChildren<Food>())
+            Destroy(item.gameObject);
     }
 
     // Briefly starts running forward.
