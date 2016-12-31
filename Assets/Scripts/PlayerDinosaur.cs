@@ -119,7 +119,8 @@ public class PlayerDinosaur : MonoBehaviour
         // Move forward based on the animation state.
         AnimatorStateInfo state = Animator.GetCurrentAnimatorStateInfo(0);
 
-        if (state.IsName("Walk") || state.IsName("LowGrab") || state.IsName("HighGrab"))
+        if (!Animator.GetBool("Stopped") && 
+            (state.IsName("Walk") || state.IsName("LowGrab") || state.IsName("HighGrab")))
         {
             CameraTarget.transform.Translate(WalkSpeed * Time.deltaTime, 0f, 0f);
         }

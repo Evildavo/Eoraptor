@@ -130,6 +130,16 @@ public class UserInput : MonoBehaviour {
                 PlayerDinosaur.Walk();
                 UI.SwipeRightGuide.Swipe();
             }
+            if (upSwipe)
+            {
+                PlayerDinosaur.GrabHigh();
+                UI.SwipeUpGuide.Swipe();
+            }
+            else if (downSwipe)
+            {
+                PlayerDinosaur.GrabLow();
+                UI.SwipeDownGuide.Swipe();
+            }
         }
         else
         {
@@ -170,8 +180,8 @@ public class UserInput : MonoBehaviour {
             }
             else if (PlayerDinosaur.IsStopped())
             {
-                UI.SwipeUpGuide.Hide();
-                UI.SwipeDownGuide.Hide();
+                UI.SwipeUpGuide.Show();
+                UI.SwipeDownGuide.Show();
                 UI.SwipeLeftGuide.Hide();
                 UI.SwipeRightGuide.Show();
             }
