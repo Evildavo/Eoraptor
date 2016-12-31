@@ -90,6 +90,7 @@ public class PlayerDinosaur : MonoBehaviour
             if (Mathf.Abs(plantX - mouthX) < plant.BoxCollider2D.size.x / 2f)
             {
                 Destroy(plant.gameObject);
+                break;
             }
         }
     }
@@ -105,6 +106,7 @@ public class PlayerDinosaur : MonoBehaviour
             if (Mathf.Abs(preyX - mouthX) < prey.BoxCollider2D.size.x / 2f)
             {
                 Destroy(prey.gameObject);
+                break;
             }
         }
     }
