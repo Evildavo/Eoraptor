@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(PlayerDinosaur))]
 public class UserInput : MonoBehaviour {
@@ -17,6 +18,14 @@ public class UserInput : MonoBehaviour {
     public UI UI;
 
     public float MinSwipeDistance;
+
+    void onAnyTouch()
+    {
+        if (PlayerDinosaur.IsEndReached())
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
 
     void Start ()
     {
@@ -48,6 +57,7 @@ public class UserInput : MonoBehaviour {
             {
                 positionAtTouch = currentTouchPosition;
                 touching = true;
+                onAnyTouch();
             }
         }
         else if (Input.GetMouseButton(0))
@@ -57,12 +67,18 @@ public class UserInput : MonoBehaviour {
             {
                 positionAtTouch = currentTouchPosition;
                 touching = true;
+                onAnyTouch();
             }
         }
         else
         {
             touching = false;
             swiped = false;
+
+            if (Input.anyKeyDown)
+            {
+                onAnyTouch();
+            }
         }
 
         // Check for swipe motions.
