@@ -10,8 +10,6 @@ public class PlayerDinosaur : MonoBehaviour
     private bool isSprintingForward;
     private float timeAtSprintStart;
     private Vector3 basePosition;
-    private HighCatchPoint HighCatchPoint;
-    private LowCatchPoint LowCatchPoint;
 
     public float WalkSpeed = 1.0f;
     public float RunSpeed = 1.0f;
@@ -30,18 +28,6 @@ public class PlayerDinosaur : MonoBehaviour
         {
             Destroy(gameObject);
             Debug.LogError("Parent does not contain CameraTarget", transform);
-        }
-        HighCatchPoint = GetComponentInChildren<HighCatchPoint>();
-        if (!HighCatchPoint)
-        {
-            Destroy(gameObject);
-            Debug.LogError("Does not have HighCatchPoint child", transform);
-        }
-        LowCatchPoint = GetComponentInChildren<LowCatchPoint>();
-        if (!LowCatchPoint)
-        {
-            Destroy(gameObject);
-            Debug.LogError("Does not have LowCatchPoint child", transform);
         }
         basePosition = transform.localPosition;
     }
@@ -97,12 +83,11 @@ public class PlayerDinosaur : MonoBehaviour
     public void OnHighGrab()
     {
         float plantX;
-        float highCatchX;
+        float mouthX = MouthPoint.transform.position.x;
         foreach (EdiblePlant plant in HighFoodContainer.GetComponentsInChildren<EdiblePlant>())
         {
             plantX = plant.transform.position.x;
-            highCatchX = HighCatchPoint.transform.position.x;
-            if (Mathf.Abs(plantX - highCatchX) < plant.BoxCollider2D.size.x / 2f)
+            if (Mathf.Abs(plantX - mouthX) < plant.BoxCollider2D.size.x / 2f)
             {
                 Destroy(plant.gameObject);
             }
@@ -113,12 +98,11 @@ public class PlayerDinosaur : MonoBehaviour
     public void OnLowGrab()
     {
         float preyX;
-        float lowCatchX;
+        float mouthX = MouthPoint.transform.position.x;
         foreach (PreyDinosaur prey in LowFoodContainer.GetComponentsInChildren<PreyDinosaur>())
         {
             preyX = prey.transform.position.x;
-            lowCatchX = LowCatchPoint.transform.position.x;
-            if (Mathf.Abs(preyX - lowCatchX) < prey.BoxCollider2D.size.x / 2f)
+            if (Mathf.Abs(preyX - mouthX) < prey.BoxCollider2D.size.x / 2f)
             {
                 Destroy(prey.gameObject);
             }
