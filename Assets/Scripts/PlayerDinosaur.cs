@@ -10,11 +10,16 @@ public class PlayerDinosaur : MonoBehaviour
     private bool isSprintingForward;
     private float timeAtSprintStart;
     private Vector3 basePosition;
+    private HighCatchPoint HighCatchPoint;
+    private LowCatchPoint LowCatchPoint;
 
     public float WalkSpeed = 1.0f;
     public float RunSpeed = 1.0f;
     public float SprintDistance;
     public float SprintTime = 1.0f;
+
+    public Transform HighFoodContainer;
+    public Transform LowFoodContainer;
 
     void Start()
     {
@@ -24,6 +29,18 @@ public class PlayerDinosaur : MonoBehaviour
         {
             Destroy(gameObject);
             Debug.LogError("Parent does not contain CameraTarget", transform);
+        }
+        HighCatchPoint = GetComponentInChildren<HighCatchPoint>();
+        if (!HighCatchPoint)
+        {
+            Destroy(gameObject);
+            Debug.LogError("Does not have HighCatchPoint child", transform);
+        }
+        LowCatchPoint = GetComponentInChildren<LowCatchPoint>();
+        if (!LowCatchPoint)
+        {
+            Destroy(gameObject);
+            Debug.LogError("Does not have LowCatchPoint child", transform);
         }
         basePosition = transform.localPosition;
     }
@@ -73,6 +90,28 @@ public class PlayerDinosaur : MonoBehaviour
     public bool IsSprinting()
     {
         return isSprintingForward;
+    }
+
+    // Handles the moment the dinosaur grabs above.
+    public void OnHighGrab()
+    {
+        float plantX;
+        float highCatchX;
+        foreach (EdiblePlant plant in HighFoodContainer.GetComponentsInChildren<EdiblePlant>())
+        {
+            plantX = plant.transform.position.x;
+            highCatchX = HighCatchPoint.transform.position.x;
+            if (Mathf.Abs(plantX - highCatchX) < plant.BoxCollider2D.size.x / 2f)
+            {
+                Destroy(plant.gameObject);
+            }
+        }
+    }
+
+    // Handles the moment the dinosaur grabs below.
+    public void OnLowGrab()
+    {
+
     }
 
     void Update()
