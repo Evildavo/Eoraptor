@@ -3,12 +3,12 @@ using System.Collections;
 
 public class Food : MonoBehaviour {
 
-	// Use this for initialization
+    public float FoodValue;
+    
 	void Start () {
 	
 	}
 	
-	// Update is called once per frame
 	void Update () {
 	
 	}

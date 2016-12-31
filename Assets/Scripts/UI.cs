@@ -7,6 +7,7 @@ public class UI : MonoBehaviour {
     public SwipeGuide SwipeDownGuide;
     public SwipeGuide SwipeLeftGuide;
     public SwipeGuide SwipeRightGuide;
+    public FoodBar FoodBar;
 
     void Start () {
 	

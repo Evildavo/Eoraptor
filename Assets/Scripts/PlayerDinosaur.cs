@@ -20,6 +20,8 @@ public class PlayerDinosaur : MonoBehaviour
     public Transform HighFoodContainer;
     public Transform LowFoodContainer;
 
+    public UI UI;
+
     void Start()
     {
         Animator = GetComponent<Animator>();
@@ -89,6 +91,7 @@ public class PlayerDinosaur : MonoBehaviour
     // Handles the moment the dinosaur grabs above.
     public void OnHighGrab()
     {
+        // Check for food caught.
         const float NEW_DEPTH = 1f;
         float plantX;
         float mouthX = MouthPoint.transform.position.x;
@@ -97,6 +100,8 @@ public class PlayerDinosaur : MonoBehaviour
             plantX = plant.transform.position.x;
             if (Mathf.Abs(plantX - mouthX) < plant.BoxCollider2D.size.x / 2f)
             {
+                // Food was caught.
+                UI.FoodBar.Progress += plant.GetComponent<Food>().FoodValue;
                 plant.transform.SetParent(MouthPoint.transform);
                 plant.transform.localPosition = new Vector3(0f, 0f, NEW_DEPTH);
                 break;
@@ -107,6 +112,7 @@ public class PlayerDinosaur : MonoBehaviour
     // Handles the moment the dinosaur grabs below.
     public void OnLowGrab()
     {
+        // Check for food caught.
         const float NEW_DEPTH = 1f;
         float preyX;
         float mouthX = MouthPoint.transform.position.x;
@@ -115,6 +121,8 @@ public class PlayerDinosaur : MonoBehaviour
             preyX = prey.transform.position.x;
             if (Mathf.Abs(preyX - mouthX) < prey.BoxCollider2D.size.x / 2f)
             {
+                // Food was caught.
+                UI.FoodBar.Progress += prey.GetComponent<Food>().FoodValue;
                 prey.Die();
                 prey.transform.SetParent(MouthPoint.transform);
                 prey.transform.localPosition = new Vector3(0f, 0f, NEW_DEPTH);
