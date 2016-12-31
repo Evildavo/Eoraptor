@@ -110,87 +110,100 @@ public class UserInput : MonoBehaviour {
         }
 
         // Control dinosaur.
-        if (PlayerDinosaur.IsSprinting())
+        if (!PlayerDinosaur.IsEndReached())
         {
-            if (upSwipe)
+            if (PlayerDinosaur.IsSprinting())
             {
-                PlayerDinosaur.GrabHigh();
-                UI.SwipeUpGuide.Swipe();
+                if (upSwipe)
+                {
+                    PlayerDinosaur.GrabHigh();
+                    UI.SwipeUpGuide.Swipe();
+                }
+                else if (downSwipe)
+                {
+                    PlayerDinosaur.GrabLow();
+                    UI.SwipeDownGuide.Swipe();
+                }
             }
-            else if (downSwipe)
+            else if (PlayerDinosaur.IsStopped())
             {
-                PlayerDinosaur.GrabLow();
-                UI.SwipeDownGuide.Swipe();
+                if (rightSwipe)
+                {
+                    PlayerDinosaur.Walk();
+                    UI.SwipeRightGuide.Swipe();
+                }
+                if (upSwipe)
+                {
+                    PlayerDinosaur.GrabHigh();
+                    UI.SwipeUpGuide.Swipe();
+                }
+                else if (downSwipe)
+                {
+                    PlayerDinosaur.GrabLow();
+                    UI.SwipeDownGuide.Swipe();
+                }
             }
-        }
-        else if (PlayerDinosaur.IsStopped())
-        {
-            if (rightSwipe)
+            else
             {
-                PlayerDinosaur.Walk();
-                UI.SwipeRightGuide.Swipe();
-            }
-            if (upSwipe)
-            {
-                PlayerDinosaur.GrabHigh();
-                UI.SwipeUpGuide.Swipe();
-            }
-            else if (downSwipe)
-            {
-                PlayerDinosaur.GrabLow();
-                UI.SwipeDownGuide.Swipe();
-            }
-        }
-        else
-        {
-            if (upSwipe)
-            {
-                PlayerDinosaur.GrabHigh();
-                UI.SwipeUpGuide.Swipe();
-            }
-            else if (downSwipe)
-            {
-                PlayerDinosaur.GrabLow();
-                UI.SwipeDownGuide.Swipe();
-            }
-            else if (rightSwipe)
-            {
-                PlayerDinosaur.SprintForward();
-                UI.SwipeRightGuide.Swipe();
-            }
-            else if (leftSwipe)
-            {
-                PlayerDinosaur.Stop();
-                UI.SwipeLeftGuide.Swipe();
+                if (upSwipe)
+                {
+                    PlayerDinosaur.GrabHigh();
+                    UI.SwipeUpGuide.Swipe();
+                }
+                else if (downSwipe)
+                {
+                    PlayerDinosaur.GrabLow();
+                    UI.SwipeDownGuide.Swipe();
+                }
+                else if (rightSwipe)
+                {
+                    PlayerDinosaur.SprintForward();
+                    UI.SwipeRightGuide.Swipe();
+                }
+                else if (leftSwipe)
+                {
+                    PlayerDinosaur.Stop();
+                    UI.SwipeLeftGuide.Swipe();
+                }
             }
         }
 
         // Update swipe guides.
-        if (!UI.SwipeUpGuide.IsSwiping() &&
-            !UI.SwipeDownGuide.IsSwiping() &&
-            !UI.SwipeLeftGuide.IsSwiping() &&
-            !UI.SwipeRightGuide.IsSwiping())
+        if (PlayerDinosaur.IsEndReached())
         {
-            if (PlayerDinosaur.IsSprinting())
+            UI.SwipeUpGuide.Hide();
+            UI.SwipeDownGuide.Hide();
+            UI.SwipeLeftGuide.Hide();
+            UI.SwipeRightGuide.Hide();
+        }
+        else
+        {
+            if (!UI.SwipeUpGuide.IsSwiping() &&
+                !UI.SwipeDownGuide.IsSwiping() &&
+                !UI.SwipeLeftGuide.IsSwiping() &&
+                !UI.SwipeRightGuide.IsSwiping())
             {
-                UI.SwipeUpGuide.Show();
-                UI.SwipeDownGuide.Show();
-                UI.SwipeLeftGuide.Hide();
-                UI.SwipeRightGuide.Hide();
-            }
-            else if (PlayerDinosaur.IsStopped())
-            {
-                UI.SwipeUpGuide.Show();
-                UI.SwipeDownGuide.Show();
-                UI.SwipeLeftGuide.Hide();
-                UI.SwipeRightGuide.Show();
-            }
-            else
-            {
-                UI.SwipeUpGuide.Show();
-                UI.SwipeDownGuide.Show();
-                UI.SwipeLeftGuide.Show();
-                UI.SwipeRightGuide.Show();
+                if (PlayerDinosaur.IsSprinting())
+                {
+                    UI.SwipeUpGuide.Show();
+                    UI.SwipeDownGuide.Show();
+                    UI.SwipeLeftGuide.Hide();
+                    UI.SwipeRightGuide.Hide();
+                }
+                else if (PlayerDinosaur.IsStopped())
+                {
+                    UI.SwipeUpGuide.Show();
+                    UI.SwipeDownGuide.Show();
+                    UI.SwipeLeftGuide.Hide();
+                    UI.SwipeRightGuide.Show();
+                }
+                else
+                {
+                    UI.SwipeUpGuide.Show();
+                    UI.SwipeDownGuide.Show();
+                    UI.SwipeLeftGuide.Show();
+                    UI.SwipeRightGuide.Show();
+                }
             }
         }
     }

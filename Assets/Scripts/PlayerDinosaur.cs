@@ -10,6 +10,7 @@ public class PlayerDinosaur : MonoBehaviour
     private bool isSprintingForward;
     private float timeAtSprintStart;
     private Vector3 basePosition;
+    private bool endReached;
 
     public float WalkSpeed = 1.0f;
     public float RunSpeed = 1.0f;
@@ -19,6 +20,9 @@ public class PlayerDinosaur : MonoBehaviour
     public Transform MouthPoint;
     public Transform HighFoodContainer;
     public Transform LowFoodContainer;
+
+    [Space(10f)]
+    public Transform StopPoint;
 
     public UI UI;
 
@@ -88,6 +92,12 @@ public class PlayerDinosaur : MonoBehaviour
         return isSprintingForward;
     }
 
+    // Returns true if the dinosaur has reached the water hole.
+    public bool IsEndReached()
+    {
+        return endReached;
+    }
+
     // Handles the moment the dinosaur grabs above.
     public void OnHighGrab()
     {
@@ -133,6 +143,13 @@ public class PlayerDinosaur : MonoBehaviour
 
     void Update()
     {
+        // Stop when past the stop point.
+        if (transform.position.x >= StopPoint.transform.position.x)
+        {
+            endReached = true;
+            Stop();
+        }
+
         // Move forward based on the animation state.
         AnimatorStateInfo state = Animator.GetCurrentAnimatorStateInfo(0);
 
