@@ -43,14 +43,12 @@ public class PlayerDinosaur : MonoBehaviour
     public void GrabLow()
     {
         Animator.SetTrigger("LowGrab");
-        Animator.SetBool("Running", false);
     }
 
     // Jumps up to grab something up high.
     public void GrabHigh()
     {
         Animator.SetTrigger("HighGrab");
-        Animator.SetBool("Running", false);
     }
 
     // Briefly starts running forward.
@@ -138,10 +136,6 @@ public class PlayerDinosaur : MonoBehaviour
             if (timeDelta < SprintTime)
             {
                 position.x += Mathf.Sin(timeDelta / SprintTime * Mathf.PI) * SprintDistance;
-                if (state.IsName("Walk"))
-                {
-                    Animator.SetBool("Running", true);
-                }
             }
             else
             {
