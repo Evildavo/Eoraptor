@@ -25,11 +25,20 @@ public class UserInput : MonoBehaviour {
 	
 	void Update ()
     {
+        upSwipe = false;
+        downSwipe = false;
+        leftSwipe = false;
+        rightSwipe = false;
+
         // Keyboard input style.
-        upSwipe = Input.GetKeyDown(KeyCode.UpArrow);
-        downSwipe = Input.GetKeyDown(KeyCode.DownArrow);
-        leftSwipe = Input.GetKeyDown(KeyCode.LeftArrow);
-        rightSwipe = Input.GetKeyDown(KeyCode.RightArrow);
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+            upSwipe = true;
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+            downSwipe = true;
+        else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+            leftSwipe = true;
+        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+            rightSwipe = true;
 
         // Get mouse/touch state.
         if (Input.touches.Length > 0)

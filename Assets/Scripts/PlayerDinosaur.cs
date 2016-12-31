@@ -111,7 +111,17 @@ public class PlayerDinosaur : MonoBehaviour
     // Handles the moment the dinosaur grabs below.
     public void OnLowGrab()
     {
-
+        float preyX;
+        float lowCatchX;
+        foreach (PreyDinosaur prey in LowFoodContainer.GetComponentsInChildren<PreyDinosaur>())
+        {
+            preyX = prey.transform.position.x;
+            lowCatchX = LowCatchPoint.transform.position.x;
+            if (Mathf.Abs(preyX - lowCatchX) < prey.BoxCollider2D.size.x / 2f)
+            {
+                Destroy(prey.gameObject);
+            }
+        }
     }
 
     void Update()
